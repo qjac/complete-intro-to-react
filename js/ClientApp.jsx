@@ -1,22 +1,21 @@
-// @flow
-
 import React from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import App from './App';
 
-const renderApp = () => {
-  render(
-    <BrowserRouter key={Math.random()}>
-      <App />
-    </BrowserRouter>,
-    document.getElementById('app')
-  );
+const ce = React.createElement;
+
+const MyTitle = function(props) {
+	return ce('div', null, ce('h1', { style: { color: props.color } }, props.title));
 };
-renderApp();
 
-if (module.hot) {
-  module.hot.accept('./App', () => {
-    renderApp();
-  });
-}
+const MyFirstComponent = function() {
+	return ce(
+		'div',
+		{ id: 'my-first-component' },
+		ce(MyTitle, { title: 'title a', color: 'yellowgreen' }),
+		ce(MyTitle, { title: 'title b', color: 'greenyellow' }),
+		ce(MyTitle, { title: 'title c', color: 'limegreen' }),
+		ce(MyTitle, { title: 'title d', color: 'lime' })
+	);
+};
+
+render(ce(MyFirstComponent), document.getElementById('app'));
